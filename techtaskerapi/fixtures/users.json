@@ -1,0 +1,41 @@
+[
+  {
+      "model": "auth.user",
+      "pk": 1,
+      "fields": {
+          "username": "supervisor",
+          "password": "hashed_password", 
+          "first_name": "Supervisor",
+          "last_name": "User",
+          "email": "supervisor@example.com",
+          "is_staff": true,
+          "is_active": true
+      }
+  },
+  {
+      "model": "auth.user",
+      "pk": 2,
+      "fields": {
+          "username": "employee1",
+          "password": "hashed_password", 
+          "first_name": "John",
+          "last_name": "Doe",
+          "email": "john.doe@example.com",
+          "is_staff": false,
+          "is_active": true
+      }
+  },
+  {
+      "model": "auth.user",
+      "pk": 3,
+      "fields": {
+          "username": "employee2",
+          "password": "hashed_password",  
+          "first_name": "Jane",
+          "last_name": "Smith",
+          "email": "jane.smith@example.com",
+          "is_staff": false,
+          "is_active": true
+      }
+  }
+]

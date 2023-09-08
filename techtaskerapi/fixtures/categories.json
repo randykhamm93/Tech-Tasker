@@ -1,0 +1,44 @@
+[ 
+  {
+    "model": "techtaskerapi.category",
+    "pk": 2,
+    "fields": {
+          "name": "Mechanical"
+      }
+  },  
+  {
+      "model": "techtaskerapi.category",
+      "pk": 2,
+      "fields": {
+          "name": "Mechanical"
+      }
+  },
+  {
+      "model": "techtaskerapi.category",
+      "pk": 3,
+      "fields": {
+          "name": "Electrical"
+      }
+  },
+  {
+      "model": "techtaskerapi.category",
+      "pk": 4,
+      "fields": {
+          "name": "Welding"
+      }
+  },
+  {
+      "model": "techtaskerapi.category",
+      "pk": 5,
+      "fields": {
+          "name": "Hydraulic"
+      }
+  },
+  {
+      "model": "techtaskerapi.category",
+      "pk": 6,
+      "fields": {
+          "name": "Pneumatic"
+      }
+  }
+]

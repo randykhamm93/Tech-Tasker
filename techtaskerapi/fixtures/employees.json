@@ -1,0 +1,28 @@
+[
+  {
+      "model": "techtaskerapi.employee",
+      "pk": 1,
+      "fields": {
+          "user": 1,  
+          "start_date": "2023-01-15",
+          "role": "Maintenance Tech 1",
+          "specialty": "Electrical",
+          "hourly_wage": 20,
+          "shift": 1,
+          "is_supervisor": false
+      }
+  },
+  {
+      "model": "techtaskerapi.employee",
+      "pk": 2,
+      "fields": {
+          "user": 2,  
+          "start_date": "2023-02-20",
+          "role": "Employee Role 2",
+          "specialty": "Mechanical",
+          "hourly_wage": 18,
+          "shift": 2,
+          "is_supervisor": false
+      }
+  }
+]
