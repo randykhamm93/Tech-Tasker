@@ -36,4 +36,4 @@ class DepartmentSerializer(serializers.ModelSerializer):
     """JSON serializer for departments"""
     class Meta:
         model = Department
-        fields = ('id', 'name', 'num_of_employees', 'description',)
+        fields = ('id', 'name', 'description',)

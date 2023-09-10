@@ -3,42 +3,48 @@
       "model": "techtaskerapi.department",
       "pk": 1,
       "fields": {
-          "name": "Assembly"
+          "name": "Assembly",
+          "description": "Handles all assembling of parts"
       }
   },
   {
       "model": "techtaskerapi.department",
       "pk": 2,
       "fields": {
-          "name": "Raw Materials"
+          "name": "Material Handling",
+          "description": "Handling of parts from warehouse to floor"
       }
   },
   {
       "model": "techtaskerapi.department",
       "pk": 3,
       "fields": {
-          "name": "Press"
+          "name": "Press",
+          "description": "Handles stamping and cutting of parts"
       }
   },
   {
       "model": "techtaskerapi.department",
       "pk": 4,
       "fields": {
-          "name": "Kiln"
+          "name": "Kiln",
+          "description": "Handles heating of parts"
       }
   },
   {
       "model": "techtaskerapi.department",
       "pk": 5,
       "fields": {
-          "name": "Shipping & Receiving"
+          "name": "Shipping & Receiving",
+          "description": "Handles shipping and receiving of parts"
       }
   },
   {
       "model": "techtaskerapi.department",
       "pk": 6,
       "fields": {
-          "name": "Packing"
+          "name": "Packing",
+          "description": "Handles packaging of parts for transportation"
       }
   }
 ]

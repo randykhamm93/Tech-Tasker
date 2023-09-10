@@ -51,8 +51,13 @@ def register_user(request):
     first_name = request.data.get('first_name', None)
     last_name = request.data.get('last_name', None)
     password = request.data.get('password', None)
-    account_type = request.data.get('account_type', None)  # Add account_type field
-    
+    start_date = request.data.get('start_date', None)
+    role = request.data.get('role', None)
+    specialty = request.data.get('specialty', None)
+    hourly_wage = request.data.get('hourly_wage', None)
+    shift = request.data.get('shift', None)
+    account_type = request.data.get('account_type', None)
+
     if email is not None and first_name is not None and last_name is not None and password is not None:
         try:
             # Create a new user by invoking the `create_user` helper method
@@ -70,21 +75,24 @@ def register_user(request):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
+        # Determine if the user is a supervisor based on account_type
+        is_supervisor = account_type == 'supervisor'
+
+        # Create an associated employee entry
+        employee = Employee.objects.create(
+            user=new_user,
+            specialty=specialty,
+            start_date=start_date,
+            role=role,
+            hourly_wage=hourly_wage,
+            shift=shift,
+            is_supervisor=is_supervisor
+        )
+
         # Use the REST Framework's token generator on the new user account
         token = Token.objects.create(user=new_user)
-        
-        is_supervisor = False  # Default to not being a supervisor
-        if account_type == 'supervisor':
-            # If the account type is 'supervisor', set is_supervisor to True
-            is_supervisor = True
-            # You can add supervisor-specific logic here if needed
-        
-        # Create an employee entry if it's an employee account
-        if not is_supervisor:
-            employee = Employee.objects.create(user=new_user, specialty='Default Specialty')  # Modify specialty as needed
-        
+
         data = {'token': token.key, 'is_staff': new_user.is_staff, 'is_supervisor': is_supervisor}
         return Response(data, status=status.HTTP_201_CREATED)
 
-    return Response({'message': 'You must provide email, password, first_name, last_name, and account_type'}, status=status.HTTP_400_BAD_REQUEST)
-
+    return Response({'message': 'You must provide email, password, first_name, last_name'}, status=status.HTTP_400_BAD_REQUEST)

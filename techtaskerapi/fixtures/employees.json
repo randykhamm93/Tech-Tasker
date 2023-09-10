@@ -4,12 +4,12 @@
       "pk": 1,
       "fields": {
           "user": 1,  
-          "start_date": "2023-01-15",
-          "role": "Maintenance Tech 1",
-          "specialty": "Electrical",
-          "hourly_wage": 20,
+          "start_date": "2022-01-15",
+          "role": "Supervisor",
+          "specialty": "Leadership",
+          "hourly_wage": 37.50,
           "shift": 1,
-          "is_supervisor": false
+          "is_supervisor": true
       }
   },
   {
@@ -18,10 +18,23 @@
       "fields": {
           "user": 2,  
           "start_date": "2023-02-20",
-          "role": "Employee Role 2",
+          "role": "Maintenance Tech I",
           "specialty": "Mechanical",
-          "hourly_wage": 18,
+          "hourly_wage": 26.70,
           "shift": 2,
+          "is_supervisor": false
+      }
+  },
+  {
+      "model": "techtaskerapi.employee",
+      "pk": 3,
+      "fields": {
+          "user": 3,  
+          "start_date": "2022-07-12",
+          "role": "Maintenance Tech II",
+          "specialty": "Electrical",
+          "hourly_wage": 31.00,
+          "shift": 3,
           "is_supervisor": false
       }
   }

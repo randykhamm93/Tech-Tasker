@@ -21,7 +21,7 @@ class WorkOrder(models.Model):
         choices=STATUS_CHOICES,
         default=NOT_STARTED,
     )
-    due_date = models.DateTimeField()
+    due_date = models.DateField()
     created_by_user = models.ForeignKey(User, on_delete=models.CASCADE)
     department = models.ForeignKey("Department", on_delete=models.CASCADE)
     category = models.ForeignKey("Category", on_delete=models.CASCADE)
