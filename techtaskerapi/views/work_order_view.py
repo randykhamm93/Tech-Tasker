@@ -1,9 +1,9 @@
-"""View module for handling requests for customer data"""
 from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import serializers, status
-from techtaskerapi.models import WorkOrder
+from django.contrib.auth.models import User
+from techtaskerapi.models import WorkOrder, Category, Department
 
 
 class WorkOrderView(ViewSet):
@@ -21,37 +21,81 @@ class WorkOrderView(ViewSet):
         return Response(serialized.data, status=status.HTTP_200_OK)
 
     def retrieve(self, request, pk=None):
-        """Handle GET requests for single work order
+        """Handle GET requests for a single work order
 
         Returns:
             Response -- JSON serialized work order record
         """
 
-        work_order = WorkOrder.objects.get(pk=pk)
-        serialized = WorkOrderSerializer(work_order, context={'request': request})
-        return Response(serialized.data, status=status.HTTP_200_OK)
+        try:
+            work_order = WorkOrder.objects.get(pk=pk)
+            serialized = WorkOrderSerializer(work_order, context={'request': request})
+            return Response(serialized.data, status=status.HTTP_200_OK)
+        except WorkOrder.DoesNotExist:
+            return Response({'message': 'Work Order not found'}, status=status.HTTP_404_NOT_FOUND)
 
     def create(self, request):
-        """Handle POST requests for service tickets
+        """Handle POST requests to create a new work order
 
         Returns:
-            Response: JSON serialized representation of newly created service ticket
+            Response -- JSON serialized representation of the newly created work order
         """
-        new_work_order = WorkOrder()
-        new_work_order.title = request.data.get('title', '')  # Set the title field
-        new_work_order.description = request.data['description']
-        new_work_order.critical = request.data.get('critical', False)  # Set the critical field, defaulting to False
-        new_work_order.status = request.data.get('status', WorkOrder.NOT_STARTED)  # Set the status field, defaulting to 'Not Started'
-        new_work_order.due_date = request.data.get('due_date', '')  # Set the due_date field
-        new_work_order.created_by_user = request.user  # Set the created_by_user field
-        new_work_order.department_id = request.data.get('department', '')  # Set the department field
-        new_work_order.category_id = request.data.get('category', '')  # Set the category field
+        try:
+            created_by_user_id = request.data['created_by_user']  # Assuming you're sending the User ID in the request data
+            created_by_user = User.objects.get(id=created_by_user_id)
 
-        new_work_order.save()
 
-        serialized = WorkOrderSerializer(new_work_order, many=False)
+            category = Category.objects.get(pk=request.data['category'])
+            department = Department.objects.get(pk=request.data['department'])
 
-        return Response(serialized.data, status=status.HTTP_201_CREATED)
+            work_order = WorkOrder.objects.create(
+                title=request.data['title'],
+                description=request.data['description'],
+                category=category,
+                due_date=request.data['due_date'],
+                created_by_user=created_by_user,
+                status=request.data['status'],
+                department=department
+            )
+
+            serializer = WorkOrderSerializer(work_order)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({'message': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    
+    def update(self, request, pk=None):
+        """Handle PUT requests to update a work order
+
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+        try:
+            work_order = WorkOrder.objects.get(pk=pk)
+            work_order.title = request.data.get("title", work_order.title)
+            work_order.description = request.data.get("description", work_order.description)
+            work_order.critical = request.data.get("critical", work_order.critical)
+            work_order.status = request.data.get("status", work_order.status)
+            work_order.due_date = request.data.get("due_date", work_order.due_date)
+            work_order.category = Category.objects.get(pk=request.data.get("category", work_order.category_id))
+            work_order.department = Department.objects.get(pk=request.data.get("department", work_order.department_id))
+            work_order.save()
+
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except WorkOrder.DoesNotExist:
+            return Response({'message': 'Work Order not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    def destroy(self, request, pk=None):
+        """Handle DELETE requests to delete a work order
+
+        Returns:
+            Response -- Empty body with 204 status code
+        """
+        try:
+            work_order = WorkOrder.objects.get(pk=pk)
+            work_order.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        except WorkOrder.DoesNotExist:
+            return Response({'message': 'Work Order not found'}, status=status.HTTP_404_NOT_FOUND)
 
 
 class WorkOrderSerializer(serializers.ModelSerializer):

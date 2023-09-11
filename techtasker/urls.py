@@ -9,7 +9,7 @@ router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'employees', EmployeeView, 'employee')
 router.register(r'categories', CategoryView, 'category')
 router.register(r'departments', DepartmentView, 'department')
-router.register(r'workorders', WorkOrderView, 'workorder')
+router.register(r'work_orders', WorkOrderView, 'workorder')
 
 urlpatterns = [
     path('', include(router.urls)),
