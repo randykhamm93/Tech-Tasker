@@ -8,6 +8,8 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from techtaskerapi.models import Employee
 
+from rest_framework import status
+
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def login_user(request):
@@ -24,20 +26,35 @@ def login_user(request):
         # authenticate returns the user object or None if no user is found
         authenticated_user = authenticate(username=email, password=password)
 
-        # If authentication was successful, respond with their token
         if authenticated_user is not None:
+            # Authentication successful
             token = Token.objects.get(user=authenticated_user)
+
+            try:
+                employee = Employee.objects.get(user=authenticated_user)
+                userEmployeeId = employee.id  # Extract the ID
+                is_supervisor = employee.is_supervisor  # Extract the is_supervisor field
+            except Employee.DoesNotExist:
+                userEmployeeId = None
+                is_supervisor = None
 
             data = {
                 'valid': True,
                 'token': token.key,
-                'is_staff': authenticated_user.is_staff
+                'is_staff': authenticated_user.is_staff,
+                'userEmployeeId': userEmployeeId,
+                'is_supervisor': is_supervisor  # Include is_supervisor in the response
             }
-            return Response(data)
+            return Response(data, status=status.HTTP_200_OK)
+        else:
+            # Authentication failed
+            data = {'valid': False, 'message': 'Invalid email or password'}
+            return Response(data, status=status.HTTP_400_BAD_REQUEST)
     
-    # Bad login details were provided. So we can't log the user in.
-    data = {'valid': False}
-    return Response(data)
+    # Invalid or missing email/password in the request
+    data = {'valid': False, 'message': 'Email and password are required'}
+    return Response(data, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['POST'])
 @permission_classes([AllowAny])

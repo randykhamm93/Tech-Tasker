@@ -11,7 +11,7 @@
       "model": "techtaskerapi.department",
       "pk": 2,
       "fields": {
-          "name": "Material Handling",
+          "name": "Press",
           "description": "Handling of parts from warehouse to floor"
       }
   },
@@ -19,7 +19,7 @@
       "model": "techtaskerapi.department",
       "pk": 3,
       "fields": {
-          "name": "Press",
+          "name": "Kiln",
           "description": "Handles stamping and cutting of parts"
       }
   },
@@ -27,7 +27,7 @@
       "model": "techtaskerapi.department",
       "pk": 4,
       "fields": {
-          "name": "Kiln",
+          "name": "Packing",
           "description": "Handles heating of parts"
       }
   },
@@ -43,7 +43,7 @@
       "model": "techtaskerapi.department",
       "pk": 6,
       "fields": {
-          "name": "Packing",
+          "name": "Quality Lab",
           "description": "Handles packaging of parts for transportation"
       }
   }
