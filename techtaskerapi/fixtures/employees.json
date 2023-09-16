@@ -9,7 +9,8 @@
           "specialty": "Leadership",
           "hourly_wage": 37.50,
           "shift": 1,
-          "is_supervisor": true
+          "is_supervisor": true,
+          "phone_number": "123-456-789"
       }
   },
   {
@@ -22,7 +23,8 @@
           "specialty": "Mechanical",
           "hourly_wage": 26.70,
           "shift": 2,
-          "is_supervisor": false
+          "is_supervisor": false,
+          "phone_number": "123-456-789"
       }
   },
   {
@@ -35,7 +37,8 @@
           "specialty": "Electrical",
           "hourly_wage": 31.00,
           "shift": 3,
-          "is_supervisor": false
+          "is_supervisor": false,
+          "phone_number": "123-456-789"
       }
   }
 ]

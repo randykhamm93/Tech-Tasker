@@ -17,7 +17,8 @@ class Employee(models.Model):
     hourly_wage = models.DecimalField( max_digits=5, decimal_places=2)
     shift = models.IntegerField(choices=SHIFT_CHOICES)
     is_supervisor = models.BooleanField(default=False)
-
+    phone_number = models.CharField(max_length=15)
+    
     @property
     def full_name(self):
         return f'{self.user.first_name} {self.user.last_name}'

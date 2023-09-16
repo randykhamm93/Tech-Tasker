@@ -30,10 +30,15 @@ class EmployeeView(ViewSet):
         employee = Employee.objects.get(pk=pk)
         serialized = EmployeeSerializer(employee, context={'request': request})
         return Response(serialized.data, status=status.HTTP_200_OK)
-
+    
 
 class EmployeeSerializer(serializers.ModelSerializer):
     """JSON serializer for employees"""
+    
+    # Define the email and phone_number fields directly
+    email = serializers.CharField(source='user.email', read_only=True)
+    
+    
     class Meta:
         model = Employee
-        fields = ('id', 'user', 'full_name', 'start_date', 'role', 'specialty', 'hourly_wage', 'shift', 'is_supervisor', )
+        fields = ('id', 'user', 'full_name', 'start_date', 'role', 'specialty', 'hourly_wage', 'shift', 'is_supervisor', 'phone_number', 'email',)

@@ -1,12 +1,20 @@
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from django.http import HttpResponseServerError
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
+from rest_framework.decorators import action
 from rest_framework import serializers, status
 from django.contrib.auth.models import User
 from techtaskerapi.models import WorkOrder, Category, Department, Employee
 
 class WorkOrderView(ViewSet):
     """Honey Rae API work orders view"""
+
+    queryset = WorkOrder.objects.all()
+
 
     def list(self, request):
         """Handle GET requests to get all work orders
@@ -95,6 +103,21 @@ class WorkOrderView(ViewSet):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except WorkOrder.DoesNotExist:
             return Response({'message': 'Work Order not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+    def update_status(self, request, pk=None):
+        try:
+            work_order = WorkOrder.objects.get(pk=pk)
+        except WorkOrder.DoesNotExist:
+            return Response({'message': 'Work Order not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        new_status = request.data.get('status')
+        if new_status in ['Not Started', 'In Progress', 'Completed']:
+            work_order.status = new_status
+            work_order.save()
+            serializer = WorkOrderSerializer(work_order)
+            return Response(serializer.data)
+        else:
+            return Response({'message': 'Invalid status value'}, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, pk=None):
         """Handle DELETE requests to delete a work order
