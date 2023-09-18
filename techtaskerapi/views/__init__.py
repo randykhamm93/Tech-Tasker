@@ -3,3 +3,4 @@ from .employee_view import EmployeeView
 from .category_view import CategoryView
 from .department_view import DepartmentView
 from .work_order_view import WorkOrderView
+from .employee_work_order_view import EmployeeWorkOrderView

@@ -33,17 +33,14 @@ def login_user(request):
             try:
                 employee = Employee.objects.get(user=authenticated_user)
                 userEmployeeId = employee.id  # Extract the ID
-                is_supervisor = employee.is_supervisor  # Extract the is_supervisor field
             except Employee.DoesNotExist:
                 userEmployeeId = None
-                is_supervisor = None
 
             data = {
                 'valid': True,
                 'token': token.key,
                 'is_staff': authenticated_user.is_staff,
                 'userEmployeeId': userEmployeeId,
-                'is_supervisor': is_supervisor  # Include is_supervisor in the response
             }
             return Response(data, status=status.HTTP_200_OK)
         else:
@@ -73,6 +70,7 @@ def register_user(request):
     specialty = request.data.get('specialty', None)
     hourly_wage = request.data.get('hourly_wage', None)
     shift = request.data.get('shift', None)
+    phone_number=request.data.get('phone_number', None)
     account_type = request.data.get('account_type', None)
 
     if email is not None and first_name is not None and last_name is not None and password is not None:
@@ -103,6 +101,7 @@ def register_user(request):
             role=role,
             hourly_wage=hourly_wage,
             shift=shift,
+            phone_number=phone_number,
             is_supervisor=is_supervisor
         )
 

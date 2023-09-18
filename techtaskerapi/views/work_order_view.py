@@ -13,8 +13,6 @@ from techtaskerapi.models import WorkOrder, Category, Department, Employee
 class WorkOrderView(ViewSet):
     """Honey Rae API work orders view"""
 
-    queryset = WorkOrder.objects.all()
-
 
     def list(self, request):
         """Handle GET requests to get all work orders
@@ -141,7 +139,7 @@ class UserSerializer(serializers.ModelSerializer):
 class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
-        fields = ('id', 'full_name', )
+        fields = ('id', 'full_name',)
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:

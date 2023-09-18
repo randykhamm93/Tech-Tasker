@@ -3,13 +3,15 @@ from rest_framework import routers
 from django.contrib import admin
 from django.urls import path
 from techtaskerapi.views import register_user, login_user
-from techtaskerapi.views import EmployeeView, CategoryView, DepartmentView, WorkOrderView
+from techtaskerapi.views import EmployeeView, CategoryView, DepartmentView, WorkOrderView, EmployeeWorkOrderView
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'employees', EmployeeView, 'employee')
 router.register(r'categories', CategoryView, 'category')
 router.register(r'departments', DepartmentView, 'department')
 router.register(r'work_orders', WorkOrderView, 'workorder')
+router.register(r'employee_work_orders', EmployeeWorkOrderView, 'employeeworkorder')
+
 
 urlpatterns = [
     path('', include(router.urls)),
