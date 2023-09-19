@@ -9,6 +9,7 @@ from rest_framework import serializers, status
 from django.contrib.auth.models import User
 from techtaskerapi.models import EmployeeWorkOrder, Employee, WorkOrder
 
+
 class EmployeeWorkOrderView(ViewSet):
     """Honey Rae API work orders view"""
 
@@ -20,7 +21,7 @@ class EmployeeWorkOrderView(ViewSet):
             Response -- JSON serialized list of employee work orders
         """
 
-        user_employee_id = request.auth.user.    employee.id
+        user_employee_id = request.auth.user.employee.id
 
         employee_work_orders = EmployeeWorkOrder.objects.filter(employee=user_employee_id)
         serialized = EmployeeWorkOrderSerializer(employee_work_orders, many=True)
@@ -37,7 +38,7 @@ class WorkOrderSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = WorkOrder
-        fields = ('id', 'title')
+        fields = ('id', 'title', 'due_date', 'status',)
 
 class EmployeeWorkOrderSerializer(serializers.ModelSerializer):
     """Serializer for EmployeeWorkOrder model"""

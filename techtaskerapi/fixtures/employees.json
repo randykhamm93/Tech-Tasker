@@ -6,7 +6,7 @@
           "user": 1,  
           "start_date": "2022-01-15",
           "role": "Supervisor",
-          "specialty": "Leadership",
+          "specialty": "Management",
           "hourly_wage": 37.50,
           "shift": 1,
           "is_supervisor": true,
